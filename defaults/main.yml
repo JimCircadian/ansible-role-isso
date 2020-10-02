@@ -1,0 +1,30 @@
+---
+isso_port:        8082
+
+# TODO: Multiple site hostings!
+isso_vhost_server_name:   example.org
+isso_vhost_wsgi_process:  isso
+isso_vhost_threads: 2
+isso_vhost_isso_config:   "{{ isso_wsgi_path }}/example.org.conf"
+isso_vhost_aliases:       []
+
+isso_wsgi_uri:    /isso/
+isso_wsgi_venv:   "{{ isso_wsgi_user_home }}/.virtualenvs/isso"
+isso_wsgi_venv_python:  /usr/bin/python3.6
+isso_wsgi_path:   /var/www/isso
+isso_wsgi_config: /etc/httpd/conf.d/isso.conf
+isso_wsgi_user:   wsgi
+isso_wsgi_user_home:    /var/opt/wsgi
+isso_wsgi_group:  wsgi
+isso_package_deps:
+  - httpd
+  - python36-devel
+  - python36-pip
+  - python36-mod_wsgi
+  - python-virtualenv
+  - sqlite
+  - libffi-devel
+  - "@Development Tools"
+isso_pips:
+  - pip>=20.0.0
+  - isso

@@ -1,0 +1,58 @@
+---
+- name:     Add IUS repo
+  yum:
+    name:   https://repo.ius.io/ius-release-el7.rpm
+    state:  present
+
+- name: Ensure httpd, python36, virtualenv and mod_wsgi are available
+  package:
+    name:   "{{ item }}"
+    state:  installed
+  with_items: "{{ isso_package_deps }}"
+
+- name: Create WSGI user if required
+  user:
+    name:   "{{ isso_wsgi_user }}"
+    create_home:  yes
+    home:   "{{ isso_wsgi_user_home }}"
+    local:  yes
+    shell:  "/sbin/nologin"
+    system: yes
+
+- name: Install packages into virtualenv
+  pip:
+    name:         "{{ isso_pips }}"
+    virtualenv:   "{{ isso_wsgi_venv }}"
+    virtualenv_python:  "{{ isso_wsgi_venv_python }}"
+
+- name: Ensure isso_wsgi_path exists for the application
+  file:
+    state:  directory
+    path:   "{{ isso_wsgi_path }}"
+    owner:  root
+    group:  root
+    mode:   0755
+
+- name: Deploy the ISSO WSGI application
+  template:
+    src:  var/www/isso/isso.wsgi.j2
+    dest: "{{ isso_wsgi_path }}/isso.wsgi"
+    owner:  root
+    group:  root
+    mode:   0644
+
+- name: Deploy the ISSO HTTPD configuration
+  template:
+    src:  etc/httpd/conf.d/isso.conf.j2
+    dest:   "{{ isso_wsgi_config }}"
+    owner:  root
+    group:  root
+    mode:   0644
+
+- name: Deploy the ISSO application configuration
+  template:
+    src:  var/www/isso/isso.conf.j2
+    dest: "{{ isso_wsgi_path }}/isso.conf"
+    owner:  root
+    group:  "{{ isso_wsgi_group }}"
+    mode:   0640

@@ -1,0 +1,20 @@
+Listen {{ isso_port }}
+
+<VirtualHost *:{{ isso_port }}>
+    ServerName {{ isso_vhost_server_name }}
+    LogLevel debug
+    DocumentRoot {{ isso_wsgi_path }}
+
+    WSGIDaemonProcess {{ isso_vhost_wsgi_process }} user={{ isso_wsgi_user }} group={{ isso_wsgi_group }} threads={{ isso_vhost_threads }} python-home={{ isso_wsgi_venv }}
+    WSGIScriptAlias {{ isso_wsgi_uri }} {{ isso_wsgi_path }}/isso.wsgi
+</VirtualHost>
+
+<Directory "{{ isso_wsgi_path }}">
+  AllowOverride All
+  Options -Indexes
+  Require all granted
+
+  WSGIScriptReloading On
+  WSGIProcessGroup {{ isso_vhost_wsgi_process }}
+  WSGIApplicationGroup %{GLOBAL}
+</Directory>

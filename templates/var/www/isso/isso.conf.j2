@@ -1,0 +1,60 @@
+[general]
+dbpath = "{{ isso_wsgi_user_home }}/{{ isso_vhost_server_name }}.db"
+host =
+  http://{{ isso_vhost_server_name }}/
+  https://{{ isso_vhost_server_name }}/
+{% for name in isso_vhost_aliases %}
+  http://{{ name }}/
+  https://{{ name }}/
+{% endfor %}
+
+max-age = 15m
+notify = stdout
+;log-file =
+;
+;[server]
+;listen = http://localhost:8080
+;reload = off
+;profile = off
+;
+;[moderation]
+;enabled = false
+;purge-after = 30d
+;
+;[smtp]
+;username =
+;password =
+;host = localhost
+;port = 587
+;security = starttls
+;to =
+;from =
+;timeout = 10
+;
+;[guard]
+;enabled = true
+;ratelimit = 2
+;direct-reply = 3
+;reply-to-self = false
+;require-author = false
+;require-email = false
+;
+;[server]
+;listen = "http://localhost:{{ isso_port }}"
+;
+;[markup]
+;options = strikethrough, superscript, autolink
+;allowed-elements =
+;allowed-attributes =
+;
+;[hash]
+;salt = Eech7co8Ohloopo9Ol6baimi
+;algorithm = pbkdf2
+;
+;[rss]
+;base =
+;limit = 100
+;
+;[admin]
+;enabled = true
+;password = secret
