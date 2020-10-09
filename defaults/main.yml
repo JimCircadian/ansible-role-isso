@@ -2,13 +2,30 @@
 isso_port:        8082
 
 # TODO: Multiple site hostings!
-isso_vhost_server_name:   example.org
+isso_vhost_server_name:   comments.example.org
 isso_vhost_wsgi_process:  isso
 isso_vhost_threads: 2
 isso_vhost_isso_config:   "{{ isso_wsgi_path }}/example.org.conf"
-isso_vhost_aliases:       []
 
-isso_wsgi_uri:    /isso/
+isso_site_server_name:    example.org
+isso_site_aliases:        []
+
+isso_admin_enable:    false
+isso_admin_password:  'th15!sn0t4str0n4p4ssw0rd'
+
+isso_server_host:     localhost
+isso_server_port:     8088
+
+isso_smtp_user:     null
+isso_smtp_password: null
+isso_smtp_host:     localhost
+isso_smtp_port:     587
+isso_smtp_security:   starttls
+isso_smtp_destination:  null
+isso_smtp_sender:   isso@example.tld
+isso_smtp_timeout:  10
+
+isso_wsgi_uri:    /
 isso_wsgi_venv:   "{{ isso_wsgi_user_home }}/.virtualenvs/isso"
 isso_wsgi_venv_python:  /usr/bin/python3.6
 isso_wsgi_path:   /var/www/isso

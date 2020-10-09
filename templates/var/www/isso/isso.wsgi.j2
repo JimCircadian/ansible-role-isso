@@ -24,4 +24,4 @@ from isso import dist, config
 application = make_app(
 config.load(
     os.path.join(dist.location, dist.project_name, "defaults.ini"),
-    "{{ isso_vhost_isso_config }}"), multiprocessing=True)
+    "/var/www/isso/isso.conf"), multiprocessing=True)
