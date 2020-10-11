@@ -1,5 +1,7 @@
 ---
 isso_port:        8082
+isso_log_file:    ''
+isso_latest_enable:   false
 
 # TODO: Multiple site hostings!
 isso_vhost_server_name:   comments.example.org
@@ -13,6 +15,32 @@ isso_site_aliases:        []
 isso_admin_enable:    false
 isso_admin_password:  'th15!sn0t4str0n4p4ssw0rd'
 
+isso_guard_enabled:   true
+isso_guard_ratelimit:   2
+isso_guard_direct_reply:  3
+isso_guard_reply_to_self:   false
+isso_guard_require_author:  false
+isso_guard_require_email:   false
+
+isso_hash_algorithm:  pbkdf2
+isso_hash_salt:   Eech7co8Ohloopo9Ol6baimi
+
+isso_markup_allowed_elements: ''
+isso_markup_allowed_attributes: ''
+isso_markup_flags: ''
+isso_markup_options: "strikethrough, autolink, fenced_code, no_intra_emphasis"
+
+isso_mod_enabled:     false
+isso_mod_email_trusted: false
+isso_mod_queue_purge:   30d
+
+isso_profile:   off
+isso_public_endpoint:   ''
+isso_reload:    off
+
+isso_rss_base:  ''
+isso_rss_limit: 100
+
 isso_server_host:     localhost
 isso_server_port:     8088
 
@@ -25,6 +53,8 @@ isso_smtp_destination:  null
 isso_smtp_sender:   isso@example.tld
 isso_smtp_timeout:  10
 
+isso_trusted_proxies: []
+
 isso_wsgi_uri:    /
 isso_wsgi_venv:   "{{ isso_wsgi_user_home }}/.virtualenvs/isso"
 isso_wsgi_venv_python:  /usr/bin/python3.6
@@ -33,6 +63,7 @@ isso_wsgi_config: /etc/httpd/conf.d/isso.conf
 isso_wsgi_user:   wsgi
 isso_wsgi_user_home:    /var/opt/wsgi
 isso_wsgi_group:  wsgi
+
 isso_package_deps:
   - httpd
   - python36-devel

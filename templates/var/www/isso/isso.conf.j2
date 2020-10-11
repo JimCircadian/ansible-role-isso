@@ -54,7 +54,7 @@ notify = stdout
 reply-notifications=false
 
 # Log console messages to file instead of standard output.
-log-file =
+log-file = {{ isso_log_file }}
 
 # adds property "gravatar_image" to json response when true
 # will automatically build md5 hash by email and use "gravatar_url" to build
@@ -66,7 +66,7 @@ gravatar-url = https://www.gravatar.com/avatar/{}?d=identicon
 
 # enable the "/latest" endpoint, that serves comment for multiple posts (not
 # needing to previously know the posts URIs)
-latest-enabled = false
+latest-enabled = {{ isso_latest_enable }}
 
 [admin]
 enabled = {{ isso_admin_enable }}
@@ -78,7 +78,7 @@ password = {{ isso_admin_password }}
 # enable comment moderation queue. This option only affects new comments.
 # Comments in modertion queue are not visible to other users until you activate
 # them.
-enabled = false
+enabled = {{ isso_mod_enabled }}
 
 # with moderation enabled, automatically approve new comments by an
 # author if they've had comments approved within the last 6 months
@@ -88,10 +88,10 @@ enabled = false
 # auto-approved. For this reason, we recommend that you also activate SMTP
 # notification if you activate this option, so that you will see
 # auto-approved comments as they get posted.
-approve-if-email-previously-approved = false
+approve-if-email-previously-approved = {{ isso_mod_email_trusted }}
 
 # remove unprocessed comments in moderation queue after given time.
-purge-after = 30d
+purge-after = {{ isso_mod_queue_purge }}
 
 
 [server]
@@ -107,15 +107,15 @@ listen = http://{{ isso_server_host }}:{{ isso_server_port }}
 # public URL that Isso is accessed from by end users. Should always be a
 # http:// or https:// absolute address. If left blank, automatic detection is
 # attempted.
-public-endpoint =
+public-endpoint = {{ isso_public_endpoint }}
 
 # reload application, when the source code has changed. Useful for development.
 # Only works with the internal webserver.
-reload = off
+reload = {{ isso_reload }}
 
 # show 10 most time consuming function in Isso after each request. Do not use
 # in production.
-profile = off
+profile = {{ isso_profile }}
 
 # an optional list of reverse proxies IPs behind which you have deployed
 # your Isso web service (e.g. `127.0.0.1`).
@@ -123,6 +123,9 @@ profile = off
 # `X-Forwarded-For` HTTP header, which is important for the mechanism
 # forbiding several comment votes coming from the same subnet.
 trusted-proxies =
+{% for item in isso_trusted_proxies %}
+  {{ item }}
+{% endfor %}
 
 
 [smtp]
@@ -165,28 +168,28 @@ timeout = {{ isso_smtp_timeout }}
 # for IPv4, /48 for IPv6).
 
 # enable guard, recommended in production. Not useful for debugging purposes.
-enabled = true
+enabled = {{ isso_guard_enabled }}
 
 # limit to N new comments per minute.
-ratelimit = 2
+ratelimit = {{ isso_guard_ratelimit }}
 
 # how many comments directly to the thread (prevent a simple while true; do
 # curl ...; done.
-direct-reply = 3
+direct-reply = {{ isso_guard_direct_reply }}
 
 # allow commenters to reply to their own comments when they could still edit
 # the comment. After the editing timeframe is gone, commenters can reply to
 # their own comments anyways. Do not forget to configure the client.
-reply-to-self = false
+reply-to-self = {{ isso_guard_reply_to_self }}
 
 # force commenters to enter a value into the author field. No validation is
 # performed on the provided value.  Do not forget to configure the client
 # accordingly.
-require-author = false
+require-author = {{ isso_guard_require_author }}
 
 # require the commenter to enter an email address (note: no validation is
 # done on the provided address). Do not forget to configure the client.
-require-email = false
+require-email = {{ isso_guard_require_email }}
 
 
 [markup]
@@ -195,22 +198,22 @@ require-email = false
 
 # Misaka-specific Markdown extensions, all flags starting with EXT_ can be used
 # there, separated by comma.
-options = strikethrough, autolink, fenced_code, no_intra_emphasis
+options = {{ isso_markup_options }}
 
 # Misaka-specific HTML rendering flags, all html rendering flags can be used
 # here, separated by comma, either by their name or as HTML_<flag>.
 # Per Misaka's defaults, no flags are set.
-flags =
+flags = {{ isso_markup_flags }}
 
 # Additional HTML tags to allow in the generated output, comma-separated. By
 # default, only a, blockquote, br, code, del, em, h1, h2, h3, h4, h5, h6, hr,
 # ins, li, ol, p, pre, strong, table, tbody, td, th, thead and ul are allowed.
-allowed-elements =
+allowed-elements = {{ isso_markup_allowed_elements }}
 
 # Additional HTML attributes (independent from elements) to allow in the
 # generated output, comma-separated. By default, only align and href are
 # allowed.
-allowed-attributes =
+allowed-attributes = {{ isso_markup_allowed_attributes }}
 
 
 [hash]
@@ -221,7 +224,7 @@ allowed-attributes =
 # A salt is used to protect against rainbow tables. Isso does not make use of
 # pepper (yet). The default value has been in use since the release of Isso and
 # generates the same identicons for same addresses across installations.
-salt = Eech7co8Ohloopo9Ol6baimi
+salt = {{ isso_hash_salt }}
 
 # Hash algorithm to use -- either from Python's hashlib or PBKDF2 (a
 # computational expensive hash function).
@@ -230,7 +233,7 @@ salt = Eech7co8Ohloopo9Ol6baimi
 # iterations, 6 bytes to generate and SHA1 as pseudo-random family used for key
 # strengthening. Arguments have to be in that order, but can be reduced to
 # pbkdf2:4096 for example to override the iterations only.
-algorithm = pbkdf2
+algorithm = {{ isso_hash_algorithm }}
 
 
 [rss]
@@ -239,7 +242,7 @@ algorithm = pbkdf2
 # The base URL of pages is needed to build the Atom feed. By appending
 # the URI, we should get the complete URL to use to access the page
 # with the comments. When empty, Atom feeds are disabled.
-base =
+base = {{ isso_rss_base }}
 
 # Limit the number of elements to return for each thread.
-limit = 100
+limit = {{ isso_rss_limit }}
