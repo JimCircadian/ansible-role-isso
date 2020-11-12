@@ -2,6 +2,7 @@
 isso_port:        8082
 isso_log_file:    ''
 isso_latest_enable:   false
+isso_notification:  stdout
 
 # TODO: Multiple site hostings!
 isso_vhost_server_name:   comments.example.org
