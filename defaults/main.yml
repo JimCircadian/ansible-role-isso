@@ -9,6 +9,7 @@ isso_vhost_server_name:   comments.example.org
 isso_vhost_wsgi_process:  isso
 isso_vhost_threads: 2
 isso_vhost_isso_config:   "{{ isso_wsgi_path }}/example.org.conf"
+isso_vhost_custom_log:    true
 
 isso_site_server_name:    example.org
 isso_site_aliases:        []

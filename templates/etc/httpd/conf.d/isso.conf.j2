@@ -4,6 +4,9 @@ Listen {{ isso_port }}
     ServerName {{ isso_vhost_server_name }}
     LogLevel debug
     DocumentRoot {{ isso_wsgi_path }}
+{% if isso_vhost_server_name %}
+    CustomLog "logs/{{ isso_vhost_server_name }}.access_log" combined
+{% endif %}
 
     WSGIDaemonProcess {{ isso_vhost_wsgi_process }} user={{ isso_wsgi_user }} group={{ isso_wsgi_group }} threads={{ isso_vhost_threads }} python-home={{ isso_wsgi_venv }}
     WSGIScriptAlias {{ isso_wsgi_uri }} {{ isso_wsgi_path }}/isso.wsgi
