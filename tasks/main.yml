@@ -15,7 +15,6 @@
     name:   "{{ isso_wsgi_user }}"
     create_home:  yes
     home:   "{{ isso_wsgi_user_home }}"
-    local:  yes
     shell:  "/sbin/nologin"
     system: yes
 
